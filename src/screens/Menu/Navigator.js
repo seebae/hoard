@@ -3,6 +3,7 @@ import { Dimensions } from 'react-native';
 import Dashboard from 'screens/Dashboard';
 import ICO from 'screens/ICO';
 import Wallet from 'screens/Wallet';
+import Confirm from 'screens/Wallet/Confirm';
 import Settings from 'screens/Settings';
 import Intro from 'screens/Intro';
 import CoinInformation from 'screens/CoinInformation';
@@ -23,6 +24,7 @@ const RouteConfigs = {
     screen: StackNavigator({
       Main: { screen: withHeader('Wallet', Wallet) },
       CoinInformation: { screen: CoinInformation },
+      Confirm: { screen: Confirm },
     }),
   },
   Dashboard: {
