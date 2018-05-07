@@ -58,3 +58,4 @@ buck-out/
 .env.prod
 .env.staging
 .env.test
+ios/AirshipConfig.plist

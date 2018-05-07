@@ -46,6 +46,7 @@
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "reselect": "^3.0.1",
+    "urbanairship-react-native": "^1.6.2",
     "victory-native": "^0.17.4"
   },
   "rnpm": {
