@@ -2,6 +2,7 @@ import { AsyncStorage } from 'react-native';
 import { call, take, select, put } from 'redux-saga/effects';
 
 import NavigatorService from 'lib/navigator';
+import Config from 'react-native-config';
 import api from 'lib/api';
 
 import loginFlow from 'screens/Login/sagas';
@@ -34,7 +35,7 @@ export function signOut() {
 }
 
 // TODO: abstract these into dev/prod files
-const checkUserSessionUrl = `https://erebor-staging.hoardinvest.com/users/`;
+const checkUserSessionUrl = `${Config.EREBOR_ENDPOINT}/users/`;
 /**
  * checkSessionApi
  * @return {async function} Calls the backend to check the status of the user's session.
@@ -90,7 +91,7 @@ export async function setUser(user) {
 }
 
 // TODO: abstract these into dev/prod files
-const logoutUrl = `https://erebor-staging.hoardinvest.com/logout/`;
+const logoutUrl = `${Config.EREBOR_ENDPOINT}/logout/`;
 /**
  * Logout
  * @return {async function} Calls the backen to remove the user's session.

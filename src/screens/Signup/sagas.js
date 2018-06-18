@@ -12,9 +12,10 @@
 import { call, put } from 'redux-saga/effects';
 import { SIGNUP_SUCCESS, SIGNUP_ERROR } from './constants';
 import api from 'lib/api';
+import Config from 'react-native-config';
 
 // TODO: abstract these into dev/prod files
-const signupUrl = `https://erebor-staging.hoardinvest.com/users/`;
+const signupUrl = `${Config.EREBOR_ENDPOINT}/users/`;
 
 async function signupApi(
   first_name,

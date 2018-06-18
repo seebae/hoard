@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Config from 'react-native-config';
 import { Alert, Keyboard, StyleSheet, View } from 'react-native';
 import { Layout, Header, Body } from 'components/Base';
 import { Try } from 'components/Conditional';
@@ -75,7 +76,7 @@ export default class CreateSupportTicket extends Component {
 
     try {
       const response = await api.post(
-        'https://erebor-staging.hoardinvest.com/support',
+        `${Config.EREBOR_ENDPOINT}/support`,
         answers
       );
       if (response.success) {

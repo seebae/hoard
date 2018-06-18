@@ -10,6 +10,7 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 import { delay } from 'redux-saga';
 import { AsyncStorage } from 'react-native';
+import Config from 'react-native-config';
 
 import {
   DOCUMENT_VERIFICATION_REQUESTING,
@@ -18,7 +19,7 @@ import {
 } from './constants';
 //
 // // TODO: abstract these into dev/prod files
-// const kycUrl = `https://erebor-staging.hoardinvest.com/kyc/`;
+// const kycUrl = `${Config.EREBOR_ENDPOINT}/kyc/`;
 //
 const mockKYCcheckAPI = user_information => {
   const randMax = 10;
