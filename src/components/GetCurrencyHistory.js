@@ -1,4 +1,5 @@
 import React from 'react';
+import Config from 'react-native-config';
 import PropTypes from 'prop-types';
 import Fetch, { makeRequest } from 'components/Fetch';
 
@@ -41,7 +42,7 @@ const constructQueries = (currency, tradingPair, limit, interval, aggregate) => 
 const getUrl = interval => {
   switch (interval) {
     case Intervals.hour:
-      return 'https://min-api.cryptocompare.com/data/histohour';
+      return `${Config.EREBOR_ENDPOINT}/pricing_data/histohour`;
     case Intervals.day:
     case Intervals.week:
     case Intervals.month:
@@ -49,7 +50,7 @@ const getUrl = interval => {
     case Intervals.multiYear:
     case Intervals.all:
     default:
-      return 'https://min-api.cryptocompare.com/data/histoday';
+      return `${Config.EREBOR_ENDPOINT}/pricing_data/histoday`;
   }
 };
 

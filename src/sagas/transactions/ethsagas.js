@@ -1,4 +1,5 @@
 import ethers from 'ethers';
+import Config from 'react-native-config';
 import {
   SYMBOL_ETH
 } from "containers/App/constants";
@@ -40,7 +41,7 @@ export const getBlock = asyncMemoize(provider.getBlock.bind(provider));
 export const getBalance = asyncMemoize(provider.getBalance.bind(provider));
 
 export const timestampPriceApi = new RequestLimiter(
-  'https://min-api.cryptocompare.com/data/pricehistorical',
+  `${Config.EREBOR_ENDPOINT}/pricing_data/pricehistorical`,
   {numRequests: 15, perTimestamp: 1000},
   (response) => response.Type === 99
 );

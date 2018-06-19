@@ -1,8 +1,9 @@
 import React from 'react';
+import Config from 'react-native-config';
 import PropTypes from 'prop-types';
 import Fetch, { makeRequest } from 'components/Fetch';
 
-const url = 'https://min-api.cryptocompare.com/data/pricemulti';
+const url = `${Config.EREBOR_ENDPOINT}/pricing_data/pricemulti`;
 
 const constructQueries = ( currencies, tradingPair ) => [
   { name: 'fsyms', value: currencies.join(',') },
