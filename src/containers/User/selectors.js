@@ -7,6 +7,11 @@ export const userSelector = createSelector(
   userState => userState.user
 );
 
+export const userFullNameSelector = createSelector(
+  userSelector,
+  (user = {}) => [user.firstName, user.lastName].filter(v => v).join(' ')
+);
+
 export const userUidSelector = createSelector(
   userSelector,
   (user = {}) => user.user_uid

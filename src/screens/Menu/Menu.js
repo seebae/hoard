@@ -14,6 +14,8 @@ import {
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { signOut } from 'sagas/authentication';
+import { totalHoldingsSelector } from 'sagas/pricing/selectors';
+import { isSignedInSelector, userFullNameSelector } from 'containers/User/selectors';
 import NavigatorService from 'lib/navigator';
 import { gradients } from 'styles';
 import LinearGradient from 'react-native-linear-gradient';
@@ -22,9 +24,9 @@ import Conditional, { Try, Otherwise } from 'components/Conditional';
 class Menu extends Component {
   static propTypes = {
     navigation: PropTypes.object,
-    user: PropTypes.shape({
-      user_uid: PropTypes.string,
-    }),
+    isSignedIn: PropTypes.bool,
+    userFullName: PropTypes.string,
+    totalHoldings: PropTypes.number,
     signOut: PropTypes.func.isRequired,
   };
 
@@ -54,6 +56,14 @@ class Menu extends Component {
                   <Icon icon="ios-close-outline" />
                 </TouchableOpacity>
               </View>
+              <Try condition={this.props.isSignedIn && !!this.props.userFullName}>
+                <Text style={styles.userFullName}>
+                  {this.props.userFullName}
+                </Text>
+              </Try>
+              <Text style={styles.totalHoldings}>
+                ${this.props.totalHoldings.toFixed(2)}
+              </Text>
 
               <View style={styles.subHeadingContainer}>
                 <Text style={styles.subHeading}>Payments</Text>
@@ -96,7 +106,7 @@ class Menu extends Component {
           </ScrollView>
           <View style={styles.footerContainer}>
             <Conditional>
-              <Try condition={this.props.user && this.props.user.user_uid}>
+              <Try condition={this.props.isSignedIn}>
                 <Button type="base" onPress={() => this.props.signOut()}>
                   LOG OUT
                 </Button>
@@ -115,7 +125,11 @@ class Menu extends Component {
 }
 
 function mapStateToProps(state) {
-  return { user: state.user.user };
+  return {
+    isSignedIn: isSignedInSelector(state),
+    totalHoldings: totalHoldingsSelector(state),
+    userFullName: userFullNameSelector(state),
+  };
 }
 
 export default connect(mapStateToProps, { signOut })(Menu);
@@ -129,6 +143,24 @@ const styles = StyleSheet.create({
   },
   imageView: {
     flex: 1,
+  },
+  userFullName: {
+    color: '#FFFFFF',
+    fontSize: 12,
+    fontFamily: 'HelveticaNeue-Bold',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 16,
+  },
+  totalHoldings: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontFamily: 'HelveticaNeue-Bold',
+    fontWeight: 'bold',
+    textAlign: 'left',
+    letterSpacing: 0,
+    lineHeight: 20,
   },
   image: {
     width: null,
