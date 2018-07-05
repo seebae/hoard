@@ -14,7 +14,7 @@ import {
 import Button from 'components/Button';
 import Icon from 'components/Icon';
 import { signOut } from 'sagas/authentication';
-import { totalHoldingsSelector } from 'sagas/pricing/selectors';
+import { allPricesLoadedSelector, totalHoldingsSelector } from 'sagas/pricing/selectors';
 import { isSignedInSelector, userFullNameSelector } from 'containers/User/selectors';
 import NavigatorService from 'lib/navigator';
 import { gradients } from 'styles';
@@ -27,6 +27,7 @@ class Menu extends Component {
     isSignedIn: PropTypes.bool,
     userFullName: PropTypes.string,
     totalHoldings: PropTypes.number,
+    allPricesLoaded: PropTypes.bool,
     signOut: PropTypes.func.isRequired,
   };
 
@@ -61,7 +62,14 @@ class Menu extends Component {
                   {this.props.userFullName}
                 </Text>
               </Try>
-              <Text style={styles.totalHoldings}>
+              <Text
+                style={[
+                  styles.totalHoldings,
+                  this.props.allPricesLoaded
+                    ? styles.totalHoldingsLoaded
+                    : styles.totalHoldingsRequesting
+                ]}
+              >
                 ${this.props.totalHoldings.toFixed(2)}
               </Text>
 
@@ -127,6 +135,7 @@ class Menu extends Component {
 function mapStateToProps(state) {
   return {
     isSignedIn: isSignedInSelector(state),
+    allPricesLoaded: allPricesLoadedSelector(state),
     totalHoldings: totalHoldingsSelector(state),
     userFullName: userFullNameSelector(state),
   };
@@ -154,13 +163,18 @@ const styles = StyleSheet.create({
     lineHeight: 16,
   },
   totalHoldings: {
-    color: '#FFFFFF',
     fontSize: 16,
     fontFamily: 'HelveticaNeue-Bold',
     fontWeight: 'bold',
     textAlign: 'left',
     letterSpacing: 0,
     lineHeight: 20,
+  },
+  totalHoldingsLoaded: {
+    color: '#FFFFFF',
+  },
+  totalHoldingsRequesting: {
+    color: '#999',
   },
   image: {
     width: null,

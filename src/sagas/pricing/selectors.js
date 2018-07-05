@@ -15,3 +15,14 @@ export const totalHoldingsSelector = createSelector(
     0
   )
 );
+
+export const allPricesLoadedSelector = createSelector(
+  allWalletsSelector,
+  state => state.pricing,
+  (wallets, pricing) => wallets.reduce(
+    (allPricesLoaded, {symbol}) => {
+      return allPricesLoaded && !pricing[symbol].price.requesting;
+    },
+    true
+  )
+);
