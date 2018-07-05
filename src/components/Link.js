@@ -77,10 +77,10 @@ const styles = StyleSheet.create({
   icon: {
     width: 20,
     height: 20,
+    marginRight: 20,
     resizeMode: 'contain',
   },
   title: {
-    marginLeft: 20,
     color: 'white',
   },
 });
