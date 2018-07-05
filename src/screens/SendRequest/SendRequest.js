@@ -326,10 +326,13 @@ export default class SendRequest extends Component {
     };
 
     let title = '';
+    let recipientEmptyText = '';
     if (this.state.transactionType === TYPE_SEND) {
       title = 'SEND';
+      recipientEmptyText = 'Recipient';
     } else if (this.state.transactionType === TYPE_REQUEST) {
       title = 'Request';
+      recipientEmptyText = 'Requesting From';
     }
 
     return (
@@ -365,7 +368,7 @@ export default class SendRequest extends Component {
                       </Conditional>
                       <View style={styles.recipientContent}>
                         <T.Light style={styles.recipientText}>
-                          {this.state.recipient || 'Recipient'}
+                          {this.state.recipient || recipientEmptyText}
                         </T.Light>
                         <Try condition={!!this.state.recipient}>
                           <TouchableOpacity
