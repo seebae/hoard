@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Validator from 'wallet-address-validator';
 import Config from 'react-native-config';
-import { Alert, StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Alert, Image, StyleSheet, View, TouchableOpacity } from 'react-native';
 import memoize from 'lodash/memoize';
 
 import { colors } from 'styles';
@@ -370,14 +370,19 @@ export default class SendRequest extends Component {
                         <T.Light style={styles.recipientText}>
                           {this.state.recipient || recipientEmptyText}
                         </T.Light>
-                        <Try condition={!!this.state.recipient}>
-                          <TouchableOpacity
-                            style={styles.action}
-                            onPress={this.clearValue('recipient')}
-                          >
-                            <Icon icon="ios-close-circle" style={{ size: 20, color: 'rgba(255,255,255,0.5)' }} />
-                          </TouchableOpacity>
-                        </Try>
+                        <Conditional>
+                          <Try condition={!!this.state.recipient}>
+                            <TouchableOpacity
+                              style={styles.action}
+                              onPress={this.clearValue('recipient')}
+                            >
+                              <Icon icon="ios-close-circle" style={{ size: 20, color: 'rgba(255,255,255,0.5)' }} />
+                            </TouchableOpacity>
+                          </Try>
+                          <Otherwise>
+                            <Image style={styles.recipientChevron} source={require('assets/chevron.png')} />
+                          </Otherwise>
+                        </Conditional>
                       </View>
                     </View>
                   </TouchableOpacity>
@@ -448,6 +453,11 @@ const styles = StyleSheet.create({
   },
   recipientText: {
     color: 'white',
+  },
+  recipientChevron: {
+    resizeMode: 'contain',
+    height: 14,
+    width: 14,
   },
   action: {
     marginBottom: -10,
