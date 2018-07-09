@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Text, View, StyleSheet } from 'react-native';
+import { Image, Text, View, StyleSheet } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import T from 'components/Typography';
 import InputList from './InputList';
@@ -12,6 +12,8 @@ const LANG_SUCCESS_STRING = 'Your PIN was entered successfully!.';
 
 export default class Pin extends Component {
   static propTypes = {
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
     handleSuccess: PropTypes.func,
   };
 
@@ -58,6 +60,8 @@ export default class Pin extends Component {
   };
 
   render() {
+    const title = this.props.title || LANG_ENTER_STRING;
+    const subtitle = this.props.subtitle || `Attempts: ${this.state.attempts}`;
     if (this.state.attempts >= this.maxRetries) {
       return (
         <View style={styles.container}>
@@ -71,14 +75,24 @@ export default class Pin extends Component {
     } else {
       return (
         <Animatable.View animation="fadeInUp" style={styles.container}>
+          <View style={{justifyContent: 'center', alignItems: 'center', padding: 20}}>
+            <Image
+              style={{
+                height: 100,
+                width: 100,
+              }}
+              resizeMode="contain"
+              source={require('assets/pin-shield.png')}
+            />
+          </View>
           <View style={styles.pinView}>
             <T.Heading style={styles.text}>
-              {this.state.valid ? '' : LANG_ENTER_STRING}
+              {this.state.valid ? '' : title}
               {this.state.pin && this.state.valid && LANG_SUCCESS_STRING}
             </T.Heading>
-            <Text style={styles.pinPromptText}>
-              Attempts: {this.state.attempts}
-            </Text>
+            <T.Light style={styles.pinPromptText}>
+              {subtitle}
+            </T.Light>
             <Animatable.View ref={this.handleInputRef}>
               <InputList pinLength={6} pinValue={this.state.pinValue} />
             </Animatable.View>
@@ -94,12 +108,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  text: {
+    color: 'white',
+  },
   pinView: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     paddingTop: 40,
-    backgroundColor: 'rgb(239, 239, 244)',
+    backgroundColor: 'transparent',
   },
   pinKeyboard: {
     flex: -1,
@@ -121,6 +137,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgb(239, 239, 244)',
   },
   pinPromptText: {
-    marginBottom: 10,
+    textAlign: 'center',
+    color: 'white',
+    marginVertical: 10,
   },
 });

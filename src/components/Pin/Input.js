@@ -10,21 +10,21 @@ export default class Input extends Component {
 
   render() {
     return (
-      <View style={{marginRight: 14}}>
+      <View style={{marginHorizontal: 5, marginVertical: 10}}>
       <SVG
-        height="30"
-        width="30"
+        height="22"
+        width="22"
       >
         <Defs>
-          <LinearGradient id="grad" y1="0" x1="0" y2="30" x2="0">
+          <LinearGradient id="grad" y1="0" x1="0" y2="22" x2="0">
             <Stop offset="0" stopColor="rgb(153,47,238)" />
             <Stop offset="1" stopColor="rgb(230,34,131)" />
           </LinearGradient>
         </Defs>
         <Circle
-          cx="15"
-          cy="15"
-          r="13"
+          cx="11"
+          cy="11"
+          r="10"
           stroke="url(#grad)"
           strokeWidth="1"
           fill={this.props.hasValue ? "url(#grad)" : "transparent"}

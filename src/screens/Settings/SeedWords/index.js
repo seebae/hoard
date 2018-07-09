@@ -46,6 +46,8 @@ export default class SeedWords extends Component {
     if (pin && !pinSuccess) {
       return (
         <Pin
+          title="Input Pin"
+          subtitle="Your PIN will be used to unlock and view your keys"
           handleSuccess={this.onPinSuccess}
         />
       );
