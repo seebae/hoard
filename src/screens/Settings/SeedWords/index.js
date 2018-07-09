@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Text, Image, StyleSheet } from 'react-native';
+import { AsyncStorage, StyleSheet } from 'react-native';
 import SeedWordsList from './SeedWordsList';
 import SeedWordsSplash from './SeedWordsSplash';
 import Pin from 'components/Pin';
 import { getKey } from 'components/Pin/utils';
 import NavigatorService from 'lib/navigator';
 
+const SEED_WORDS_ACCESS_TIME_KEY = 'SEED_WORDS_ACCESS_TIME';
 
 export default class SeedWords extends Component {
   static propTypes = {};
@@ -13,25 +14,33 @@ export default class SeedWords extends Component {
   state = {
     pin: null,
     pinSuccess: false,
+    lastDisplayTime: null,
     page: 0
   }
 
   componentDidMount() {
-    getKey().then(pin => this.setState({pin}));
+    getKey()
+      .then(pin => this.setState({pin}));
+    AsyncStorage.getItem(SEED_WORDS_ACCESS_TIME_KEY)
+      .then(lastDisplayTime => this.setState({lastDisplayTime}));
   }
 
   increment = () => this.setState({page: this.state.page + 1})
   decrement = () => this.setState({page: this.state.page - 1})
 
-  onPinSuccess = () => this.setState({pinSuccess: true});
+  onPinSuccess = () => {
+    const lastDisplayTime = Date.now();
+    AsyncStorage.setItem(SEED_WORDS_ACCESS_TIME_KEY, lastDisplayTime.toString());
+    this.setState({pinSuccess: true, lastDisplayTime});
+  }
 
   toSettings = () => NavigatorService.navigate('Settings')
 
   render() {
-    const { page, pin, pinSuccess } = this.state;
+    const { page, pin, pinSuccess, lastDisplayTime } = this.state;
 
     if (page === 0) {
-      return <SeedWordsSplash increment={this.increment}/>;
+      return <SeedWordsSplash onDisplay={this.increment} lastDisplayTime={lastDisplayTime}/>;
     }
 
     if (pin && !pinSuccess) {
