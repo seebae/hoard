@@ -17,6 +17,10 @@ export default function Settings({ selectedTradingPair }) {
             <T.Light style={{ color: 'white' }}>{selectedTradingPair}</T.Light>
           }
         />
+        <Link
+          title="Seed Words"
+          to="SeedWords"
+        />
       </Body>
     </Layout>
   );
